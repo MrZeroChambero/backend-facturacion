@@ -1,0 +1,88 @@
+### Primera solicitud registro nuevo
+POST http://localhost:3001/Compra/RegistrarCarrito HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoicGVwaXRvIiwiYXBlbGxpZG9zIjoiamltZW5lcyIsIm5pdmVsIjoxLCJpYXQiOjE3NDMxMTc4NzAsImV4cCI6MTQ0MDAxNzQzMTE3ODcwfQ.mnfn7cp0DgJ6EWhnTql3muDQ80y1lcNpj1_j8PoGDFY
+Content-Type: application/json
+
+{
+    "producto": 2,
+    "cantidad": 657,
+    "proveedor": 1
+}
+
+###
+POST http://localhost:3001/Compra/RegistrarCarrito HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoicGVwaXRvIiwiYXBlbGxpZG9zIjoiamltZW5lcyIsIm5pdmVsIjoxLCJpYXQiOjE3NDMxMTc4NzAsImV4cCI6MTQ0MDAxNzQzMTE3ODcwfQ.mnfn7cp0DgJ6EWhnTql3muDQ80y1lcNpj1_j8PoGDFY
+Content-Type: application/json
+
+{
+    "producto": 4,
+    "cantidad": 7,
+    "proveedor": 1
+}
+
+### Primera solicitud registro nuevo
+POST http://localhost:3001/Compra/RegistrarCarrito HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoicGVwaXRvIiwiYXBlbGxpZG9zIjoiamltZW5lcyIsIm5pdmVsIjoxLCJpYXQiOjE3NDMxMTc4NzAsImV4cCI6MTQ0MDAxNzQzMTE3ODcwfQ.mnfn7cp0DgJ6EWhnTql3muDQ80y1lcNpj1_j8PoGDFY
+Content-Type: application/json
+
+{
+    "producto": 5,
+    "cantidad": 9,
+    "proveedor": 1
+}
+
+###
+POST http://localhost:3001/Compra/RegistrarCarrito HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoicGVwaXRvIiwiYXBlbGxpZG9zIjoiamltZW5lcyIsIm5pdmVsIjoxLCJpYXQiOjE3NDMxMTc4NzAsImV4cCI6MTQ0MDAxNzQzMTE3ODcwfQ.mnfn7cp0DgJ6EWhnTql3muDQ80y1lcNpj1_j8PoGDFY
+Content-Type: application/json
+
+{
+    "producto": 1,
+    "cantidad": 3,
+    "proveedor": 1
+}
+
+
+### Primera solicitud registro nuevo
+GET http://localhost:3001/Compra/DatosCarrito HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoicGVwaXRvIiwiYXBlbGxpZG9zIjoiamltZW5lcyIsIm5pdmVsIjoxLCJpYXQiOjE3NDMxMTc4NzAsImV4cCI6MTQ0MDAxNzQzMTE3ODcwfQ.mnfn7cp0DgJ6EWhnTql3muDQ80y1lcNpj1_j8PoGDFY
+
+### Primera solicitud registro nuevo
+DELETE  http://localhost:3001/Compra//EliminarProductoCarrito/30 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoicGVwaXRvIiwiYXBlbGxpZG9zIjoiamltZW5lcyIsIm5pdmVsIjoxLCJpYXQiOjE3NDMxMTc4NzAsImV4cCI6MTQ0MDAxNzQzMTE3ODcwfQ.mnfn7cp0DgJ6EWhnTql3muDQ80y1lcNpj1_j8PoGDFY
+### Primera solicitud registro nuevo
+DELETE  http://localhost:3001/Compra/VaciarCarritoUsuario HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoicGVwaXRvIiwiYXBlbGxpZG9zIjoiamltZW5lcyIsIm5pdmVsIjoxLCJpYXQiOjE3NDMxMTc4NzAsImV4cCI6MTQ0MDAxNzQzMTE3ODcwfQ.mnfn7cp0DgJ6EWhnTql3muDQ80y1lcNpj1_j8PoGDFY
+
+### actualizar carrito
+PUT  http://localhost:3001/Compra/ActualizarCarrito HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoicGVwaXRvIiwiYXBlbGxpZG9zIjoiamltZW5lcyIsIm5pdmVsIjoxLCJpYXQiOjE3NDMxMTc4NzAsImV4cCI6MTQ0MDAxNzQzMTE3ODcwfQ.mnfn7cp0DgJ6EWhnTql3muDQ80y1lcNpj1_j8PoGDFY
+Content-Type: application/json
+
+{
+    "id":80,
+    "cantidad":78
+}
+
+### activar Compra
+PATCH  http://localhost:3001/Compra/Estado HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoicGVwaXRvIiwiYXBlbGxpZG9zIjoiamltZW5lcyIsIm5pdmVsIjoxLCJpYXQiOjE3NDMxMTc4NzAsImV4cCI6MTQ0MDAxNzQzMTE3ODcwfQ.mnfn7cp0DgJ6EWhnTql3muDQ80y1lcNpj1_j8PoGDFY
+Content-Type: application/json
+
+{
+    "id":27,
+    "estado":true,
+    "token":"sdsad"
+}
+
+### desactivar Compra
+PATCH  http://localhost:3001/Compra/Estado HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoicGVwaXRvIiwiYXBlbGxpZG9zIjoiamltZW5lcyIsIm5pdmVsIjoxLCJpYXQiOjE3NDMxMTc4NzAsImV4cCI6MTQ0MDAxNzQzMTE3ODcwfQ.mnfn7cp0DgJ6EWhnTql3muDQ80y1lcNpj1_j8PoGDFY
+Content-Type: application/json
+
+{
+    "id":27,
+    "estado":false,
+    "token":"sdsad"
+}
+
