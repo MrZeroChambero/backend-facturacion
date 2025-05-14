@@ -1,0 +1,67 @@
+### Primera solicitud registro nuevo
+POST http://localhost:3001/Clientes/Registrar HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21icmUiOiJwZXBpdG8iLCJhcGVsbGlkb3MiOiJqaW1lbmVzIiwibml2ZWwiOjEsImlhdCI6MTczNTk0MDQxMCwiZXhwIjoxNzM3MzgwNDEwfQ.APVX6Z2yDd6soGndiN2DtPu_wbP0tAsKQT6GEAPQVFo
+Content-Type: application/json
+
+{
+    "nombre":"cliente",
+    "cedulaRif":1000000,
+    "direccion":"palo woco",
+    "tlf":"04126667000",
+    "tipo":"G",
+    "ultimoNumero":2
+}
+
+### Segunda solicitud actualizar todo
+PUT http://localhost:3001/Clientes/Actualizar HTTP/1.1
+Content-Type: application/json
+
+{
+    "id":2,
+    "nombre":"cliente2",
+    "cedulaRif":5670,
+    "direccion":"kako",
+    "tlf":"04120000000",
+    "tipo":"h",
+    "ultimoNumero":1,
+    "token":"sdsad"
+}
+###solicitar datos
+GET http://localhost:3001/Clientes/Datos HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21icmUiOiJwZXBpdG8iLCJhcGVsbGlkb3MiOiJqaW1lbmVzIiwibml2ZWwiOjEsImlhdCI6MTczNTk0MDQxMCwiZXhwIjoxNzM3MzgwNDEwfQ.APVX6Z2yDd6soGndiN2DtPu_wbP0tAsKQT6GEAPQVFo
+
+###solicitar datos
+GET http://localhost:3001/Clientes/Datos/Buscar/becerr/true HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21icmUiOiJwZXBpdG8iLCJhcGVsbGlkb3MiOiJqaW1lbmVzIiwibml2ZWwiOjEsImlhdCI6MTczNTk0MDQxMCwiZXhwIjoxNzM3MzgwNDEwfQ.APVX6Z2yDd6soGndiN2DtPu_wbP0tAsKQT6GEAPQVFo
+
+###solicitar datos
+GET http://localhost:3001/Clientes/Datos/Buscar/pierdra/false HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21icmUiOiJwZXBpdG8iLCJhcGVsbGlkb3MiOiJqaW1lbmVzIiwibml2ZWwiOjEsImlhdCI6MTczNTk0MDQxMCwiZXhwIjoxNzM3MzgwNDEwfQ.APVX6Z2yDd6soGndiN2DtPu_wbP0tAsKQT6GEAPQVFo
+
+
+### solicitud para activar o desactivar
+
+PATCH  http://localhost:3001/Clientes/Estado HTTP/1.1
+Content-Type: application/json
+
+{
+    "id":2,
+    "estado":true,
+    "token":"sdsad"
+}
+###
+PATCH  http://localhost:3001/Clientes/Estado HTTP/1.1
+Content-Type: application/json
+
+{
+    "id":2,
+    "estado":false,
+    "token":"sdsad"
+}
+
+
+###
+DELETE http://localhost:3001/Clientes/Eliminar/7 HTTP/1.1
+Authorization: Bearer tu_token_secreto
+
+

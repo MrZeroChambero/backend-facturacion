@@ -1,0 +1,71 @@
+### Primera solicitud registro nuevo
+POST http://localhost:3001/Usuarios/Registrar HTTP/1.1
+Content-Type: application/json
+
+{
+    "nombres": "pepito",
+    "apellidos": "jimenes",
+    "cedula": 24052156,
+    "tlf": "04125555666",
+    "nickname": "pepito123",
+    "clave": "prueba",
+    "nivel": 1
+}
+
+### Primera solicitud registro nuevo
+POST http://localhost:3001/Usuarios/Registrar HTTP/1.1
+Content-Type: application/json
+
+{
+    "nombres":"jose",
+    "apellidos":"gil",
+    "cedula":28393154,
+    "tlf":"04145333666",
+    "nickname":"jose123",
+    "clave":"prueba",
+    "nivel":2
+}
+
+### Segunda solicitud actualizar todo
+PUT http://localhost:3001/Usuarios/Actualizar HTTP/1.1
+Content-Type: application/json
+
+{
+    "id":2,
+    "nombres":"jose",
+    "apellidos":"gil",
+    "cedula":28393154,
+    "tlf":"06145223666",
+    "nickname":"jose2222",
+    "clave":"prueba",
+    "nivel":3
+}
+###solicitar datos
+GET http://localhost:3001/Usuarios/Datos HTTP/1.1
+
+### solicitud para activar o desactivar
+
+PATCH  http://localhost:3001/Usuarios/Estado HTTP/1.1
+Content-Type: application/json
+
+{
+    "id":2,
+    "estado":true,
+    "token":"sdsad"
+}
+###
+PATCH  http://localhost:3001/Usuarios/Estado HTTP/1.1
+Content-Type: application/json
+
+{
+    "id":2,
+    "estado":false,
+    "token":"sdsad"
+}
+
+
+###
+DELETE http://localhost:3001/Usuarios/Eliminar/7 HTTP/1.1
+Authorization: Bearer tu_token_secreto
+
+

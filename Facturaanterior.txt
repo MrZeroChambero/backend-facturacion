@@ -1,0 +1,497 @@
+const { db, express } = require("../config");
+const routerFactura = express.Router();
+const Decimal = require("decimal.js");
+const Joi = require("joi");
+const obtenerFechaYHoraActual = () => {
+  const fecha = new Date();
+  const anio = fecha.getFullYear();
+  const mes = String(fecha.getMonth() + 1).padStart(2, "0");
+  const dia = String(fecha.getDate()).padStart(2, "0");
+  const horas = String(fecha.getHours()).padStart(2, "0");
+  const minutos = String(fecha.getMinutes()).padStart(2, "0");
+  const segundos = String(fecha.getSeconds()).padStart(2, "0");
+
+  const fechaActual = `${anio}-${mes}-${dia} ${horas}:${minutos}:${segundos}`;
+  const horaActual = `${horas}:${minutos}:${segundos}`;
+  console.log(fechaActual);
+  console.log(horaActual);
+  return [fechaActual, horaActual];
+};
+const RevisarCarrito = async (user) => {
+  try {
+    const querysql =
+      "SELECT cf1.*, (SELECT COUNT(DISTINCT cf2.cliente) FROM carritofactura cf2 WHERE cf2.usuario = cf1.usuario) AS clientes_distintos, c.nombre AS cNombre, c.cedulaRif AS cedulaRif, c.tipo AS cTipo, c.estado AS cEstado, p.nombre AS pNombre, p.tipo AS pTipo,p.cantidad AS cantidad, p.precio AS precio, p.estado AS pEstado FROM carritofactura cf1 JOIN cliente c ON cf1.cliente = c.id JOIN producto p ON cf1.producto = p.id WHERE cf1.usuario = ? AND c.id = cf1.cliente";
+    const [result] = await db.execute(querysql, [user]);
+    return result;
+  } catch (error) {
+    console.error("Error al consultar el Carrito:", error.stack);
+    return false;
+  }
+};
+// facturas
+const clientesDistintos = (carritofactura) => {
+  // Usar un objeto para rastrear clientes únicos
+  const uniqueClients = {};
+  const filteredCarritofactura = carritofactura.filter((record) => {
+    if (!uniqueClients[record.cliente]) {
+      uniqueClients[record.cliente] = true;
+      return true; // Mantener el registro
+    }
+    return false;
+    // Filtrar el duplicado
+  });
+};
+const EliminarFactura = async (factura, res) => {
+  try {
+    const querysql = "DELETE FROM factura WHERE id = ?";
+    await db.execute(querysql, [factura]);
+    return true; // Retorna true si la ejecución del SQL fue correcta
+  } catch (error) {
+    console.error("Error al eliminar datos:", error.stack);
+    return false; // Retorna false en caso de error
+  }
+};
+const DetallesFactura = async (datos) => {
+  const [factura, producto, cantidad, presionUnidad] = datos;
+
+  try {
+    const querysql =
+      "INSERT INTO detallesfactura (factura, producto, cantidad, precioUnidad) VALUES ( ?, ?, ?, ?)";
+    const [result] = await db.execute(querysql, [
+      factura,
+      producto,
+      cantidad,
+      presionUnidad,
+    ]);
+    return true;
+  } catch (error) {
+    console.error("error al crear detallesfactura", datos);
+    return false;
+  }
+};
+const ValidarReferencia = (valor, pago) => {};
+const CalcularTotalSinIva = (valor) => {
+  let precio = new Decimal(0); // Inicializar con Decimal
+
+  for (let i = 0; i < valor.length; i++) {
+    if (valor[i].precio > 0) {
+      // Utilizar Decimal para los cálculos
+      precio = precio.plus(
+        new Decimal(valor[i].precio).times(valor[i].cantidadCarrito)
+      );
+    }
+  }
+
+  return precio.toNumber(); // Convertir de vuelta a número normal
+};
+const RestarStock = async (datos) => {
+  const [producto, cantidad, cantidadCarrito] = datos;
+
+  const restante = new Decimal(cantidad).minus(cantidadCarrito);
+  if (restante.isNegative()) {
+    return false;
+  }
+
+  try {
+    const querysql =
+      "UPDATE producto SET producto.cantidad = ? WHERE producto.id = ?";
+    const queryValues = [restante.toNumber(), producto];
+    await db.execute(querysql, queryValues);
+    return true;
+  } catch (error) {
+    console.error("Error al actualizar el stock:", error);
+    return false;
+  }
+};
+const DevolverStock = async (datos) => {
+  const [producto, cantidad, cantidadCarrito] = datos;
+
+  const restante = new Decimal(cantidad).plus(cantidadCarrito);
+  if (restante.isNegative()) {
+    return false;
+  }
+
+  try {
+    const querysql =
+      "UPDATE producto SET producto.cantidad = ? WHERE producto.id = ?";
+    const queryValues = [restante.toNumber(), producto];
+    await db.execute(querysql, queryValues);
+    return true;
+  } catch (error) {
+    console.error("Error al actualizar el stock:", error);
+    return false;
+  }
+};
+const VerificarStock = (datos) => {
+  for (const { cantidad, cantidadCarrito } of datos) {
+    const restante = new Decimal(cantidad).minus(cantidadCarrito);
+    if (restante.isNegative() && restante !== undefined) {
+      return false;
+    }
+  }
+  return true;
+};
+const CalcularTotalConIva = (valor, iva) => {
+  const numero = new Decimal(valor);
+  // Porcentaje a sumar
+  const porcentaje = new Decimal(iva);
+  // Convertir el porcentaje a decimal
+  const factorPorcentaje = porcentaje.dividedBy(100);
+  // Calcular el incremento
+  const incremento = numero.times(factorPorcentaje);
+  // Sumar el incremento al número inicial let resultado
+  const resultado = numero.plus(incremento);
+  // Retornar el resultado como cadena para evitar problemas de precisión
+  return resultado.toString();
+};
+const RegistrarFormasDePago = async (datos) => {
+  const { factura, forma, dinero, referencia } = datos;
+  try {
+    const querysql = `
+      INSERT INTO pagofactura (factura, forma, cantidad, referencia)
+      VALUES (?, ?, ?, ?)
+    `;
+    const queryValues = [factura, forma, dinero, referencia];
+
+    const [result] = await db.execute(querysql, queryValues);
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+routerFactura.post("/Crear", async (req, res) => {
+  let idBorrar = 0;
+  try {
+    //? se resiven todos los datos
+    const { forma, referencia } = req.body;
+    let sobrante = "";
+
+    // Asegúrate de que `dinero` sea un array de números decimales
+    const dinero = Array.isArray(req.body.dinero)
+      ? req.body.dinero.map((d) => new Decimal(parseFloat(d)))
+      : [new Decimal(parseFloat(req.body.dinero))];
+    const [fecha, hora] = obtenerFechaYHoraActual();
+    const estado = true;
+    const iva = 16;
+    const datos = await RevisarCarrito(1);
+    const clientesD = clientesDistintos(datos); // Extraer clientes distintos (comentario original)
+    //?validaciones correspondientes
+    // Comprobar el stock
+    if (!VerificarStock(datos)) {
+      return res.send("Se está solicitando más productos de los que se tienen");
+    }
+    // el id del usuario se debe extraer de jwt
+    const PrecioTotal = CalcularTotalSinIva(datos);
+    const { cliente, usuario } = datos[0];
+    //Los arrays no tienen la misma longitud
+    if (
+      forma.length !== referencia.length ||
+      referencia.length !== dinero.length
+    ) {
+      // Tus acciones aquí
+      res.send({
+        msg: "Hubo un problema con las formas de pago, debes tener la misma cantidad de formas de pago, referencias y montos de dinero",
+        res: false,
+      });
+    }
+    // msg = DineroIngresado.gt(PrecioTotalConIva)
+    //   ? `Se deben devolver: ${Inconsistencia.toString()}.Bs`
+    //   : DineroIngresado.lt(PrecioTotalConIva)
+    //   ? `Faltan : ${Inconsistencia.toString()}.Bs`
+    //   : `La cantidad ingresada es correcta.`; // En caso de igualdad
+
+    //? verificar montos
+
+    const PrecioTotalConIva = new Decimal(
+      CalcularTotalConIva(PrecioTotal, iva)
+    );
+
+    const DineroIngresado = new Decimal(CalcularTotalSinIva(dinero));
+    if (!DineroIngresado.equals(PrecioTotalConIva)) {
+      const Inconsistencia = PrecioTotalConIva.minus(DineroIngresado);
+
+      if (DineroIngresado.gt(PrecioTotalConIva)) {
+        sobrante = `Se deben devolver: ${Inconsistencia.toString()}.Bs`;
+      } else if (DineroIngresado.lt(PrecioTotalConIva)) {
+        res.send({
+          msg: `Faltan : ${Inconsistencia.toString()}.Bs`,
+          res: false,
+        });
+      }
+    }
+
+    //? se ejecutan las solicitudes a base de datos
+
+    const querysql = `
+      INSERT INTO factura (cliente, usuario, fecha, hora, iva, PrecioTotal, estado)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
+    `;
+    const queryValues = [
+      cliente,
+      usuario,
+      fecha,
+      hora,
+      iva,
+      PrecioTotal,
+      estado,
+    ];
+
+    // Log para ver el SQL antes de ejecutarlo
+    console.log("Ejecutando SQL:", querysql);
+    console.log("Con valores:", queryValues);
+
+    const [result] = await db.execute(querysql, queryValues);
+    console.log("Resultado de la inserción de factura:", result);
+
+    idBorrar = result.insertId;
+
+    // Crear detalles factura
+    for (const { producto, cantidadCarrito, precio } of datos) {
+      const registroCompleto = await DetallesFactura([
+        result.insertId,
+        producto,
+        cantidadCarrito,
+        precio,
+      ]);
+
+      if (!registroCompleto) {
+        await handleRollback(
+          res,
+          result.insertId,
+          "Hubo un error al crear la Factura"
+        );
+        return;
+      }
+    }
+
+    // Restar stock
+    let devolverStock = [producto, cantidad, cantidadCarrito];
+    for (const { producto, cantidad, cantidadCarrito } of datos) {
+      const reducirStock = await RestarStock([
+        producto,
+        cantidad,
+        cantidadCarrito,
+      ]);
+      if (reducirStock === true) {
+        devolverStock[i] = [producto, cantidad, cantidadCarrito];
+      } else if (!reducirStock) {
+        await handleRollbackStock(
+          res,
+          result.insertId,
+          "Hubo un error al reducir el stock",
+          devolverStock
+        );
+        return;
+      }
+    }
+
+    // se Resgistran las formas de Pago
+
+    for (let i = 0; i < forma.length; i++) {
+      const FormasDePago = await RegistrarFormasDePago([
+        factura,
+        forma[i],
+        dinero[i],
+        referencia[i],
+      ]);
+      await handleRollback(
+        res,
+        result.insertId,
+        "Hubo un error al registrar las formas de pago"
+      );
+      return;
+    }
+
+    // Auditoría (comentario original)
+    res.send({ res: true, msg: "Registro exitoso", sobrante });
+    console.log({ res: true, msg: "Registro exitoso", idBorrar });
+  } catch (error) {
+    console.error("Error al registrar en la base de datos:", error.stack);
+    await EliminarFactura(idBorrar);
+    res.status(500).send({ res: false, msg: "Error al registrar" });
+  }
+});
+
+async function handleRollback(res, facturaId, mensajeError) {
+  const eliminacionExitosa = await EliminarFactura(facturaId);
+  res.send({
+    res: false,
+    msg: eliminacionExitosa
+      ? mensajeError
+      : `${mensajeError} y no se pudo eliminar los datos. El código de la factura es: ${facturaId}`,
+  });
+}
+async function handleRollbackStock(res, facturaId, mensajeError, stock) {
+  const Devolver = await DevolverStock(stock);
+
+  const eliminacionExitosa = await EliminarFactura(facturaId);
+
+  let msg = "";
+
+  if (eliminacionExitosa == false) {
+    msg += `hubo un error al elminar la factura cod:${facturaId}`;
+  } else {
+    msg += `${mensajeError} y no se pudo eliminar los datos. El código de la factura es: ${facturaId}`;
+  }
+  if (Devolver == false) {
+    msg += `, además hubo un error al devolver los productos al inventario datos:${stock}`;
+  }
+  res.send({
+    res: false,
+    msg,
+  });
+}
+routerFactura.get("/Pagos", async (req, res) => {
+  try {
+    const estado = true;
+    const querysql = "SELECT * FROM formaspago WHERE estado = ?";
+
+    const [result] = await db.execute(querysql, [estado]);
+    if (result.length < 0) {
+      res.status(500).send({ res: true, msg: "no se encontraron resultados" });
+    }
+    res.status(500).send({ res: true, msg: result });
+  } catch (error) {
+    console.error("Error al verificar las formas de pago:", error.stack);
+    res.status(500).send({
+      res: false,
+      msg: "Ha ocurrido un error inesperado al verificar las formas de pago",
+    });
+  }
+});
+routerFactura.patch("/Estado", async (req, res) => {
+  const { id, estado, token } = req.body;
+  let msg =
+    estado === true
+      ? "Se ha activado un factura"
+      : "Se ha desactivado un factura";
+
+  try {
+    const querysql = "UPDATE factura SET estado=? WHERE factura.id = ?";
+
+    const [result] = await db.execute(querysql, [estado, id]);
+
+    res.status(500).send({ res: true, msg });
+  } catch (error) {
+    console.error("Error al registrar en la base de datos:", error.stack);
+    res
+      .status(500)
+      .send({ res: false, msg: "Ha ocurrido un error inesperado" });
+  }
+});
+
+routerFactura.delete("/Eliminar/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const querysql = "DELETE FROM factura WHERE id = ?";
+    await db.execute(querysql, [id]);
+
+    res.send({ res: true, msg: "Se ha eliminado la factura" });
+  } catch (error) {
+    console.error(
+      "Error al eliminar factura en la base de datos:",
+      error.stack
+    );
+    res
+      .status(500)
+      .send({ res: false, msg: "Ha ocurrido un error inesperado" });
+  }
+});
+
+module.exports = routerFactura;
+// 1)carritofactura
+// 2)materia prima
+// 3)produto fabricable
+// 4)materia fabricable
+// 5)multi uso
+// 6)herramientas
+const RestarStock = async (datos) => {
+  if (!datos.length) {
+    console.error("Error: No hay datos para procesar");
+    return false;
+  }
+
+  const ids = [...new Set(datos.map(([producto]) => producto))].join(",");
+  const cases = datos
+    .map(
+      ([producto, cantidadCarrito]) =>
+        `WHEN ${producto} THEN cantidad - ${cantidadCarrito}`
+    )
+    .join(" ");
+
+  const condiciones = datos
+    .map(
+      ([producto, cantidadCarrito]) =>
+        `id = ${producto} AND cantidad - ${cantidadCarrito} >= 0`
+    )
+    .join(" AND ");
+
+  if (!ids || !cases || !condiciones) {
+    console.error("Error: Datos insuficientes o incorrectos");
+    return false;
+  }
+
+  const querysql = `
+    START TRANSACTION;
+
+    -- Bloquear las filas de los productos
+    SELECT cantidad FROM producto WHERE id IN (${ids}) FOR UPDATE;
+
+    -- Actualizar las cantidades de los productos
+    UPDATE producto 
+    SET cantidad = CASE id ${cases} END
+    WHERE id IN (${ids});
+    
+    -- Verificar que ninguna cantidad sea negativa
+    SELECT IF(COUNT(*) = ${datos.length}, 'OK', 'ERROR') as resultado
+    FROM producto
+    WHERE ${condiciones};
+
+    COMMIT;
+  `;
+
+  try {
+    const [rows] = await db.execute(querysql);
+    if (rows[1][0].resultado === "ERROR") {
+      throw new Error("Stock insuficiente para uno o más productos.");
+    }
+    return true;
+  } catch (error) {
+    console.error("Error al actualizar el stock:", error);
+    await db.execute("ROLLBACK;");
+    return false;
+  }
+};
+
+const DevolverStock = async (datos) => {
+  const ids = datos.map(([producto]) => producto.id).join(",");
+  const cases = datos
+    .map(
+      ([producto, cantidadCarrito]) =>
+        `WHEN ${producto.id} THEN producto.cantidad + ${cantidadCarrito}`
+    )
+    .join(" ");
+
+  const querysql = `
+    START TRANSACTION;
+
+    -- Bloquear las filas de los productos
+    SELECT cantidad FROM producto WHERE producto.id IN (${ids}) FOR UPDATE;
+
+    -- Actualizar las cantidades de los productos
+    UPDATE producto 
+    SET producto.cantidad = CASE producto.id ${cases} END
+    WHERE producto.id IN (${ids});
+
+    COMMIT;
+  `;
+
+  try {
+    await db.execute(querysql);
+    return true;
+  } catch (error) {
+    console.error("Error al actualizar el stock:", error);
+    await db.execute("ROLLBACK;");
+    return false;
+  }
+};

@@ -1,0 +1,29 @@
+POST http://localhost:3001/Login HTTP/1.1
+Content-Type: application/json
+
+{
+    "usuario": "pepito123",
+    "clave": "pruebaclave"
+}
+
+####################
+POST http://localhost:3001/Login HTTP/1.1
+Content-Type: application/json
+
+{
+    "usuario": "pepito123",
+    "clave": "asdsadsadawsdasdasds"
+}
+####################
+POST http://localhost:3001/Login HTTP/1.1
+Content-Type: application/json
+
+{
+    "usuario": "",
+    "clave": ""
+}
+
+
+####################
+GET http://localhost:3001/Login/protected HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoicGVwaXRvIiwiYXBlbGxpZG9zIjoiamltZW5lcyIsIm5pdmVsIjoxLCJpYXQiOjE3NDMxMTc4NzAsImV4cCI6MTQ0MDAxNzQzMTE3ODcwfQ.mnfn7cp0DgJ6EWhnTql3muDQ80y1lcNpj1_j8PoGDFY

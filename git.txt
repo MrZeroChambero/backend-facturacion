@@ -1,0 +1,20 @@
+cd nombrecarpeta   |  cd ./nombrecarpeta
+cd "nombre de la carpeta con espacios" | cd ./"nombre de la carpeta con espacios"
+cd .. ir para atras |  cd ../
+ls muestra lo que hay en la ubicacion
+rmdir nombrecarpeta  es para borrar la carpeta
+clear limpia la consola
+git config --global user.name "Zero"
+esta es una configuracion gobal para que aparezca el nombre zero al modificar los repositorios
+si se le quita --global dejara de ser global
+git config user.name
+muestrar el nombre se usuario asignado
+mkdir nombreCarpeta       crear una carpeta
+
+git init  crear un repositorio en la carpeta 
+
+git config --global init.defaultBranch nombreRama
+Ese comando configura la rama predeterminada que se utiliza al inicializar nuevos repositorios en Git.
+
+git status  sirve para saber el estado de un proyecto
+si se ha hecho cambios para se registrados o no

@@ -1,0 +1,39 @@
+### Primera solicitud registro nuevo
+POST http://localhost:3001/Factura/Crear HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoicGVwaXRvIiwiYXBlbGxpZG9zIjoiamltZW5lcyIsIm5pdmVsIjoxLCJpYXQiOjE3NDMxMTc4NzAsImV4cCI6MTQ0MDAxNzQzMTE3ODcwfQ.mnfn7cp0DgJ6EWhnTql3muDQ80y1lcNpj1_j8PoGDFY
+Content-Type: application/json
+
+{ "forma": ["1", "2", "3"], "dinero": ["200", "200.2", "87"], "referencia": ["1", "2", "3"] }
+
+### Primera solicitud registro nuevo
+GET http://localhost:3001/Factura/Pagos HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoicGVwaXRvIiwiYXBlbGxpZG9zIjoiamltZW5lcyIsIm5pdmVsIjoxLCJpYXQiOjE3NDMxMTc4NzAsImV4cCI6MTQ0MDAxNzQzMTE3ODcwfQ.mnfn7cp0DgJ6EWhnTql3muDQ80y1lcNpj1_j8PoGDFY
+Content-Type: application/json
+
+### Primera solicitud registro nuevo
+DELETE  http://localhost:3001/Factura/Eliminar/29 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoicGVwaXRvIiwiYXBlbGxpZG9zIjoiamltZW5lcyIsIm5pdmVsIjoxLCJpYXQiOjE3NDMxMTc4NzAsImV4cCI6MTQ0MDAxNzQzMTE3ODcwfQ.mnfn7cp0DgJ6EWhnTql3muDQ80y1lcNpj1_j8PoGDFY
+Content-Type: application/json
+
+### activar Factura
+PATCH  http://localhost:3001/Factura/Estado HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoicGVwaXRvIiwiYXBlbGxpZG9zIjoiamltZW5lcyIsIm5pdmVsIjoxLCJpYXQiOjE3NDMxMTc4NzAsImV4cCI6MTQ0MDAxNzQzMTE3ODcwfQ.mnfn7cp0DgJ6EWhnTql3muDQ80y1lcNpj1_j8PoGDFY
+Content-Type: application/json
+
+{
+    "id":27,
+    "estado":true,
+    "token":"sdsad"
+}
+
+### desactivar Factura
+PATCH  http://localhost:3001/Factura/Estado HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoicGVwaXRvIiwiYXBlbGxpZG9zIjoiamltZW5lcyIsIm5pdmVsIjoxLCJpYXQiOjE3NDMxMTc4NzAsImV4cCI6MTQ0MDAxNzQzMTE3ODcwfQ.mnfn7cp0DgJ6EWhnTql3muDQ80y1lcNpj1_j8PoGDFY
+Content-Type: application/json
+
+{
+    "id":27,
+    "estado":false,
+    "token":"sdsad"
+}
+

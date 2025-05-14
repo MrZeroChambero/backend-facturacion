@@ -1,0 +1,75 @@
+### Primera solicitud registro nuevo
+POST http://localhost:3001/Proveedor/Registrar HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21icmUiOiJwZXBpdG8iLCJhcGVsbGlkb3MiOiJqaW1lbmVzIiwibml2ZWwiOjEsImlhdCI6MTczNTk0MDQxMCwiZXhwIjoxNzM3MzgwNDEwfQ.APVX6Z2yDd6soGndiN2DtPu_wbP0tAsKQT6GEAPQVFo
+Content-Type: application/json
+
+{
+      "rif":2312313,
+      "nombre":3123123,
+      "direccion":"paloweko",
+      "correo":"xd@gmail.com",
+      "tipoRif": 1,
+      "ultimoNumero":1,
+      "tlf":11023212312
+}
+
+
+### Primera solicitud registro nuevo
+POST http://localhost:3001/Proveedor/Registrar HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21icmUiOiJwZXBpdG8iLCJhcGVsbGlkb3MiOiJqaW1lbmVzIiwibml2ZWwiOjEsImlhdCI6MTczNTk0MDQxMCwiZXhwIjoxNzM3MzgwNDEwfQ.APVX6Z2yDd6soGndiN2DtPu_wbP0tAsKQT6GEAPQVFo
+Content-Type: application/json
+
+{
+      "rif":15415841,
+      "nombre":"mulatori",
+      "direccion":"santa",
+      "correo":"ppppd@gmail.com",
+      "tipoRif": "G",
+      "ultimoNumero":1,
+      "tlf":66777444
+}
+
+### Segunda solicitud actualizar todo
+PUT http://localhost:3001/Proveedor/Actualizar HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21icmUiOiJwZXBpdG8iLCJhcGVsbGlkb3MiOiJqaW1lbmVzIiwibml2ZWwiOjEsImlhdCI6MTczNTk0MDQxMCwiZXhwIjoxNzM3MzgwNDEwfQ.APVX6Z2yDd6soGndiN2DtPu_wbP0tAsKQT6GEAPQVFo
+Content-Type: application/json
+
+{
+      "id": 2,
+      "rif":"15415841",
+      "nombre":"kaldoso",
+      "direccion":"muñeko",
+      "correo":"helo@gmail.com",
+      "tipoRif": 1,
+      "ultimoNumero":5,
+      "tlf":11023212312
+}
+###solicitar datos
+GET http://localhost:3001/Proveedor/Datos HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21icmUiOiJwZXBpdG8iLCJhcGVsbGlkb3MiOiJqaW1lbmVzIiwibml2ZWwiOjEsImlhdCI6MTczNTk0MDQxMCwiZXhwIjoxNzM3MzgwNDEwfQ.APVX6Z2yDd6soGndiN2DtPu_wbP0tAsKQT6GEAPQVFo
+
+### solicitud para activar o desactivar
+
+PATCH  http://localhost:3001/Proveedor/Estado HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21icmUiOiJwZXBpdG8iLCJhcGVsbGlkb3MiOiJqaW1lbmVzIiwibml2ZWwiOjEsImlhdCI6MTczNTk0MDQxMCwiZXhwIjoxNzM3MzgwNDEwfQ.APVX6Z2yDd6soGndiN2DtPu_wbP0tAsKQT6GEAPQVFo
+Content-Type: application/json
+
+{
+    "id":2,
+    "estado":true
+}
+###
+PATCH  http://localhost:3001/Proveedor/Estado HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21icmUiOiJwZXBpdG8iLCJhcGVsbGlkb3MiOiJqaW1lbmVzIiwibml2ZWwiOjEsImlhdCI6MTczNTk0MDQxMCwiZXhwIjoxNzM3MzgwNDEwfQ.APVX6Z2yDd6soGndiN2DtPu_wbP0tAsKQT6GEAPQVFo
+Content-Type: application/json
+
+{
+    "id":2,
+    "estado":false
+
+}
+
+
+###
+DELETE http://localhost:3001/Proveedor/Eliminar/7 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21icmUiOiJwZXBpdG8iLCJhcGVsbGlkb3MiOiJqaW1lbmVzIiwibml2ZWwiOjEsImlhdCI6MTczNTk0MDQxMCwiZXhwIjoxNzM3MzgwNDEwfQ.APVX6Z2yDd6soGndiN2DtPu_wbP0tAsKQT6GEAPQVFo

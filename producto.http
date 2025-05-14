@@ -1,0 +1,140 @@
+### Primera solicitud registro nuevo
+POST http://localhost:3001/Productos/Registrar HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoicGVwaXRvIiwiYXBlbGxpZG9zIjoiamltZW5lcyIsIm5pdmVsIjoxLCJpYXQiOjE3NDMxMTc4NzAsImV4cCI6MTQ0MDAxNzQzMTE3ODcwfQ.mnfn7cp0DgJ6EWhnTql3muDQ80y1lcNpj1_j8PoGDFY
+Content-Type: application/json
+
+{
+    "cod":"123",
+    "nombre":"coca",
+    "descripcion":"tas fina",
+    "precio":"1000",
+    "tipo":"materia Prima",
+    "medicion":"unidad",
+    "stockmin":10,
+    "stockmax":100
+}
+
+
+### Primera solicitud registro nuevo
+POST http://localhost:3001/Productos/Registrar HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoicGVwaXRvIiwiYXBlbGxpZG9zIjoiamltZW5lcyIsIm5pdmVsIjoxLCJpYXQiOjE3NDMxMTc4NzAsImV4cCI6MTQ0MDAxNzQzMTE3ODcwfQ.mnfn7cp0DgJ6EWhnTql3muDQ80y1lcNpj1_j8PoGDFY
+Content-Type: application/json
+
+{
+    "cod":143,
+    "nombre":"meta",
+    "descripcion":"de chil",
+    "precio":30,
+    "tipo":"Producto",
+    "medicion":"kg",
+    "stockmin":10,
+    "stockmax":100
+}
+### Primera solicitud registro nuevo
+POST http://localhost:3001/Productos/Registrar HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoicGVwaXRvIiwiYXBlbGxpZG9zIjoiamltZW5lcyIsIm5pdmVsIjoxLCJpYXQiOjE3NDMxMTc4NzAsImV4cCI6MTQ0MDAxNzQzMTE3ODcwfQ.mnfn7cp0DgJ6EWhnTql3muDQ80y1lcNpj1_j8PoGDFY
+Content-Type: application/json
+
+{
+    "cod":153,
+    "nombre":"azulito",
+    "descripcion":"i am blue",
+    "cantidad":0,
+    "precio":25,
+    "tipo":"materia Fabricable",
+    "medicion":"lt",
+    "stockmin":10,
+    "stockmax":100
+}
+### Primera solicitud registro nuevo
+POST http://localhost:3001/Productos/Registrar HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoicGVwaXRvIiwiYXBlbGxpZG9zIjoiamltZW5lcyIsIm5pdmVsIjoxLCJpYXQiOjE3NDMxMTc4NzAsImV4cCI6MTQ0MDAxNzQzMTE3ODcwfQ.mnfn7cp0DgJ6EWhnTql3muDQ80y1lcNpj1_j8PoGDFY
+Content-Type: application/json
+
+{
+    "cod":163,
+    "nombre":"azulito",
+    "descripcion":"i am blue",
+    "precio":25,
+    "tipo":"Producto Fabricable",
+    "medicion":"lt",
+    "stockmin":"10",
+    "stockmax":100
+}
+### Primera solicitud registro nuevo
+POST http://localhost:3001/Productos/Registrar HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoicGVwaXRvIiwiYXBlbGxpZG9zIjoiamltZW5lcyIsIm5pdmVsIjoxLCJpYXQiOjE3NDMxMTc4NzAsImV4cCI6MTQ0MDAxNzQzMTE3ODcwfQ.mnfn7cp0DgJ6EWhnTql3muDQ80y1lcNpj1_j8PoGDFY
+Content-Type: application/json
+
+{
+    "cod":723,
+    "nombre":"amarillo",
+    "descripcion":"kioken",
+    "precio":15,
+    "tipo":"multi uso",
+    "medicion":"lt",
+    "stockmin":10,
+    "stockmax":100
+}
+
+### Segunda solicitud actualizar todo
+PUT http://localhost:3001/Productos/Actualizar HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoicGVwaXRvIiwiYXBlbGxpZG9zIjoiamltZW5lcyIsIm5pdmVsIjoxLCJpYXQiOjE3NDMxMTc4NzAsImV4cCI6MTQ0MDAxNzQzMTE3ODcwfQ.mnfn7cp0DgJ6EWhnTql3muDQ80y1lcNpj1_j8PoGDFY
+Content-Type: application/json
+
+{
+    "id":2,
+    "cod":8907677,
+    "nombre":"kamarillosos",
+    "descripcion":"takioken2",
+    "precio":17,
+    "tipo":"herramienta",
+    "medicion":"unidad",
+    "stockmin":5,
+    "stockmax":110
+}
+### Segunda solicitud actualizar todo
+PUT http://localhost:3001/Productos/Actualizar HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoicGVwaXRvIiwiYXBlbGxpZG9zIjoiamltZW5lcyIsIm5pdmVsIjoxLCJpYXQiOjE3NDMxMTc4NzAsImV4cCI6MTQ0MDAxNzQzMTE3ODcwfQ.mnfn7cp0DgJ6EWhnTql3muDQ80y1lcNpj1_j8PoGDFY
+Content-Type: application/json
+
+{
+    "id":"2",
+    "cod":8907677,
+    "nombre":"kamarillosos",
+    "descripcion":"takioken2",
+    "precio":17e12,
+    "tipo":"herramienta",
+    "medicion":"unidad"
+
+}
+###solicitar datos
+GET http://localhost:3001/Productos/Datos HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoicGVwaXRvIiwiYXBlbGxpZG9zIjoiamltZW5lcyIsIm5pdmVsIjoxLCJpYXQiOjE3NDMxMTc4NzAsImV4cCI6MTQ0MDAxNzQzMTE3ODcwfQ.mnfn7cp0DgJ6EWhnTql3muDQ80y1lcNpj1_j8PoGDFY
+
+### solicitud para activar o desactivar
+
+PATCH  http://localhost:3001/Productos/Estado HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoicGVwaXRvIiwiYXBlbGxpZG9zIjoiamltZW5lcyIsIm5pdmVsIjoxLCJpYXQiOjE3NDMxMTc4NzAsImV4cCI6MTQ0MDAxNzQzMTE3ODcwfQ.mnfn7cp0DgJ6EWhnTql3muDQ80y1lcNpj1_j8PoGDFY
+Content-Type: application/json
+
+{
+    "id":"2",
+    "estado":true
+}
+###
+PATCH  http://localhost:3001/Productos/Estado HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoicGVwaXRvIiwiYXBlbGxpZG9zIjoiamltZW5lcyIsIm5pdmVsIjoxLCJpYXQiOjE3NDMxMTc4NzAsImV4cCI6MTQ0MDAxNzQzMTE3ODcwfQ.mnfn7cp0DgJ6EWhnTql3muDQ80y1lcNpj1_j8PoGDFY
+Content-Type: application/json
+
+{
+    "id":"2",
+    "estado":false
+}
+
+
+###
+DELETE http://localhost:3001/Productos/Eliminar/7 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoicGVwaXRvIiwiYXBlbGxpZG9zIjoiamltZW5lcyIsIm5pdmVsIjoxLCJpYXQiOjE3NDMxMTc4NzAsImV4cCI6MTQ0MDAxNzQzMTE3ODcwfQ.mnfn7cp0DgJ6EWhnTql3muDQ80y1lcNpj1_j8PoGDFY
+
+
